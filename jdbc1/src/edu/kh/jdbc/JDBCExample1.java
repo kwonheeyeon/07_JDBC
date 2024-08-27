@@ -12,7 +12,7 @@ import java.sql.Statement;
 public class JDBCExample1 {
 	public static void main(String[] args) {
 		
-		/* JDBC(Java DataBase Connectibity)
+		/* JDBC(Java DataBase Connectivity)
 		 * 
 		 * - Java에서 DB에 연결(접근)할 수 있게 해주는
 		 * 	 Java API (Java에서 제공하는 코드)
