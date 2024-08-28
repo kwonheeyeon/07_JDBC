@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class User {
 	private int userNo;
-	private String userID;
+	private String userId;
 	private String userPw;
 	private String userName;
 	private String enrollDate;
