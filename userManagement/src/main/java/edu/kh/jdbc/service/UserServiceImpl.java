@@ -4,6 +4,7 @@ package edu.kh.jdbc.service;
 import static edu.kh.jdbc.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import edu.kh.jdbc.dao.UserDao;
 import edu.kh.jdbc.dao.UserDaoImpl;
@@ -61,6 +62,19 @@ public class UserServiceImpl implements UserService{
 		close(conn);
 		
 		return loginUser;
+	}
+	
+	// -------------------------------------------------------------------------
+
+	@Override
+	public List<User> selectAll() throws Exception {
+		Connection conn = getConnection();
+		
+		List<User> userList = dao.selectAll(conn);
+		
+		close(conn);
+		
+		return userList;
 	}
 
 }

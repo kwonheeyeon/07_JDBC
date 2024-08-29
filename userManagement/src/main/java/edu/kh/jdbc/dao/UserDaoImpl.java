@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import edu.kh.jdbc.common.JDBCTemplate;
@@ -139,5 +141,36 @@ public class UserDaoImpl implements UserDao{
 		}
 		
 		return loginUser;
+	}
+	
+	// ------------------------------------------------------------------------------------
+
+	@Override
+	public List<User> selectAll(Connection conn) throws Exception {
+		List<User> userList = new ArrayList<User>();
+		
+		try {
+			String sql = prop.getProperty("selectAll");
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				int userNo = rs.getInt("USER_NO");
+				String userId = rs.getString("USER_ID");
+				String userPw = rs.getString("USER_PW");
+				String userName = rs.getString("USER_NAME");
+				String enrollDate = rs.getString("ENROLL_DATE");
+				
+				User user = new User(userNo, userId, userPw, userName, enrollDate);
+				
+				userList.add(user);
+			}
+		}finally {
+			close(rs);
+			close(stmt);
+		}
+		
+		return userList;
 	}
 }
