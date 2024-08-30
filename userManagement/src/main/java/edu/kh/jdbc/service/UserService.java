@@ -45,4 +45,44 @@ public interface UserService {
 	 */
 	List<User> selectAll() throws Exception;
 
+	/** 검색어가 아이디에 포함된 사용자 조회
+	 * 
+	 * @param searchId
+	 * 
+	 * @return userList
+	 * 
+	 * @throws Exception
+	 */
+	List<User> search(String searchId) throws Exception;
+
+	/** 아이디 클릭 시 사용자 상세 조회
+	 * 
+	 * @param userNo
+	 * 
+	 * @return user
+	 * 
+	 * @throws Exception
+	 */
+	User selectUser(int userNo) throws Exception;
+
+	/** 삭제 버튼 클릭 시 사용자 삭제
+	 * 
+	 * @param userNo
+	 * 
+	 * @return result
+	 * 
+	 * @throws Exception
+	 */
+	int deleteUser(int userNo) throws Exception;
+
+	/** 수정 버튼 클릭 시 비밀번호, 이름 수정
+	 * 
+	 * @param user
+	 * 
+	 * @return result
+	 * 
+	 * @throws Exception
+	 */
+	int updateUser(User user) throws Exception;
+
 }

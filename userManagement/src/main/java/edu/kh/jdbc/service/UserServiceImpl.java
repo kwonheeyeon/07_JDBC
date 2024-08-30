@@ -77,4 +77,65 @@ public class UserServiceImpl implements UserService{
 		return userList;
 	}
 
+	// ------------------------------------------------------------------------
+	
+	@Override
+	public List<User> search(String searchId) throws Exception {
+		Connection conn = getConnection();
+		
+		// 데이터 가공(없으면 패스)
+		searchId = '%' + searchId + '%'; // '%검색어%'
+		
+		// DAO 호출 수 결과 반환 받기
+		List<User> userList = dao.search(conn, searchId);
+		
+		close(conn);
+		
+		return userList;
+	}
+
+	// ------------------------------------------------------------------
+	
+	@Override
+	public User selectUser(int userNo) throws Exception {
+		Connection conn = getConnection();
+		
+		User selectUser = dao.selectUser(conn, userNo);
+		
+		close(conn);
+		
+		return selectUser;
+	}
+
+	// -------------------------------------------------------------------
+	
+	@Override
+	public int deleteUser(int userNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.deleteUser(conn, userNo);
+		
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	// ----------------------------------------------------------------------
+	
+	@Override
+	public int updateUser(User user) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updateUser(conn, user);
+		
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
 }

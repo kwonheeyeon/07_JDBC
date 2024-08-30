@@ -147,6 +147,7 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public List<User> selectAll(Connection conn) throws Exception {
+		
 		List<User> userList = new ArrayList<User>();
 		
 		try {
@@ -172,5 +173,110 @@ public class UserDaoImpl implements UserDao{
 		}
 		
 		return userList;
+	}
+
+	@Override
+	public List<User> search(Connection conn, String searchId) throws Exception {
+		
+		// ArrayList 객체를 미리 생성하는 이유
+		// == 조회된 결과를 추가(add)해서 묶어서 반환하기 위해
+		List<User> userList = new ArrayList<User>();
+		
+		try {
+			String sql = prop.getProperty("search");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, searchId); // '%검색어%'
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int userNo = rs.getInt("USER_NO");
+				String userId = rs.getString("USER_ID");
+				String userPw = rs.getString("USER_PW");
+				String userName = rs.getString("USER_NAME");
+				String enrollDate = rs.getString("ENROLL_DATE");
+				
+				User user = new User(userNo, userId, userPw, userName, enrollDate);
+				
+				userList.add(user);
+			}
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return userList;
+	}
+
+	// -----------------------------------------------------------------------------
+	
+	@Override
+	public User selectUser(Connection conn, int userNo) throws Exception {
+		User selectUser = null;
+		
+		try {
+			String sql = prop.getProperty("selectUser");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String userId = rs.getString("USER_ID");
+				String userPw = rs.getString("USER_PW");
+				String userName = rs.getString("USER_NAME");
+				String enrollDate = rs.getString("ENROLL_DATE");
+				
+				selectUser = new User(userNo, userId, userPw, userName, enrollDate);
+			}
+		}finally{
+			close(rs);
+			close(pstmt);
+		}
+		return selectUser;
+	}
+	
+	// -------------------------------------------------------------------------------
+	
+	@Override
+	public int deleteUser(Connection conn, int userNo) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("deleteUser");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	@Override
+	public int updateUser(Connection conn, User user) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateUser");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserPw());
+			pstmt.setString(2, user.getUserName());
+			pstmt.setInt(3, user.getUserNo());
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 }

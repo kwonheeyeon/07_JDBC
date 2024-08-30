@@ -34,9 +34,9 @@ public class SignUpServlet extends HttpServlet{
 		String userPw = req.getParameter("userPw");
 		String userName = req.getParameter("userName");
 		
-		System.out.println(userId);
-		System.out.println(userPw);
-		System.out.println(userName);
+//		System.out.println(userId);
+//		System.out.println(userPw);
+//		System.out.println(userName);
 		
 		
 		try {
