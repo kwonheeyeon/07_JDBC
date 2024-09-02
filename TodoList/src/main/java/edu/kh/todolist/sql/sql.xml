@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectAll">
+		SELECT
+			TODO_NO,
+			TITLE,
+			DETAIL,
+			COMPLETE,
+			TO_CHAR(REG_DATE, 'YYYY"년" MM"월" DD"일"') REG_DATE
+		FROM TB_TODO
+	</entry>
+	
+	<entry key="todoAdd">
+		INSERT INTO TB_TODO
+		VALUES(SEQ_TODO_NO.NEXTVAL, ?, ?, 0, DEFAULT)
+	</entry>
+	
+	<entry key="todoDetail">
+		SELECT
+			TODO_NO,
+			TITLE,
+			DETAIL,
+			COMPLETE,
+			TO_CHAR(REG_DATE, 'YYYY"년" MM"월" DD"일"') REG_DATE
+		FROM TB_TODO
+		WHERE TODO_NO = ?
+	</entry>
+	
+	<entry key="todoComplete">
+		UPDATE TB_TODO
+		SET
+			COMPLETE = DECODE(COMPLETE, 0, 1, 1, 0)
+		WHERE TODO_NO = ?
+	</entry>
+	
+	<entry key="todoUpdate">
+		UPDATE TB_TODO
+		SET
+			TITLE = ?,
+			DETAIL = ?
+		WHERE TODO_NO = ?
+	</entry>
+	
+	<entry key="todoDelete">
+		DELETE
+		FROM TB_TODO
+		WHERE TODO_NO = ?
+	</entry>
+	
+</properties>

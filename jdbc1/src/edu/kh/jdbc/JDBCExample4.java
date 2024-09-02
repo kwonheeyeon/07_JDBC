@@ -64,7 +64,7 @@ public class JDBCExample4 {
 				System.out.printf("%s / %s / %s / %s\n", empId, empName, deptTitle, jobName);
 			}
 			
-			if(flag = true) { // flat == true : while문이 수행된 적 없음
+			if(flag = true) { // flag == true : while문이 수행된 적 없음
 				System.out.println("일치하는 부서가 없습니다");
 			}
 		}catch(Exception e) {
